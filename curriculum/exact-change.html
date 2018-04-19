@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>FCC - Exact Change</title>
+</head>
+<body>
+
+<script type="text/javascript">
+function checkCashRegister(price, cash, cid) {
+  // just calculate change an assemble the changeArr
+  var changeArr = []; // return parameter
+
+  // IN CENTS
+  var change = ((cash*100)-(price*100));
+
+  var getCidOf = function (str) {
+    var foundArr = cid.find(function(item) {
+      return item[0] === str;
+    });
+    return foundArr[1]*100;
+  };
+
+  var getDecreasedValueOf = function(cidStr, unitValue, change) {
+    var needed = (Math.floor( change / unitValue )) * unitValue;
+    var available = getCidOf(cidStr);
+    if (available >= needed) {
+      changeArr.push([cidStr, (needed/100)]);
+      return needed;
+    } else {
+      changeArr.push([cidStr, (available/100)]);
+      return available;
+    }
+  };
+
+  if (change >= 10000) { // "ONE HUNDRED"
+    change -= getDecreasedValueOf("ONE HUNDRED", 10000, change);
+  }
+  if (change >= 2000) { // "TWENTY"
+    change -= getDecreasedValueOf("TWENTY", 2000, change);
+  }
+  if (change >= 1000) { // "TEN"
+    change -= getDecreasedValueOf("TEN", 1000, change);
+  }
+  if (change >= 500) { // "FIVE"
+    change -= getDecreasedValueOf("FIVE", 500, change);
+  }
+  if (change >= 100) { // "ONE"
+    change -= getDecreasedValueOf("ONE", 100, change);
+  }
+  if (change >= 25) { // QUARTER
+    change -= getDecreasedValueOf("QUARTER", 25, change);
+  }
+  if (change >= 10) { // DIME
+    change -= getDecreasedValueOf("DIME", 10, change);
+  }
+  if (change >= 5) { // NICKEL
+    change -= getDecreasedValueOf("NICKEL", 5, change);
+  }
+  if (change >= 1) { // PENNY
+    change -= getDecreasedValueOf("PENNY", 1, change);
+  }
+
+  var changeArrSum = changeArr.reduce(function(accumulator, currentValue) {
+    if ( currentValue[1] !== 0 )
+      return ((accumulator*100 + currentValue[1]*100) / 100);
+    else {
+      return accumulator;
+    }
+  }, 0);
+
+  var cidSum  = cid.reduce(function(accumulator, currentValue) {
+    return ((accumulator*100 + currentValue[1]*100) / 100);
+  }, 0);
+
+  var expectedChange = (((cash*100) - (price*100))/100);
+
+  if (cidSum        <  expectedChange) return "Insufficient Funds";
+  if (changeArrSum  <  expectedChange) return "Insufficient Funds";
+  if (changeArrSum === cidSum)         return "Closed";
+  if (changeArrSum === expectedChange) return changeArr;
+}
+
+// Example cash-in-drawer array:
+// [["PENNY", 1.01], => 1 cent
+// ["NICKEL", 2.05], => 5 cents
+// ["DIME", 3.10], => 10 cents
+// ["QUARTER", 4.25], => 25 cents
+// ["ONE", 90.00],
+// ["FIVE", 55.00],
+// ["TEN", 20.00],
+// ["TWENTY", 60.00],
+// ["ONE HUNDRED", 100.00]]
+
+console.warn(
+  checkCashRegister(19.50,20.00,
+    [
+      ["PENNY", 1.01],
+      ["NICKEL", 2.05],
+      ["DIME", 3.10],
+      ["QUARTER", 4.25],
+      ["ONE", 90.00],
+      ["FIVE", 55.00],
+      ["TEN", 20.00],
+      ["TWENTY", 60.00],
+      ["ONE HUNDRED", 100.00]
+    ]
+  )
+); // ["QUARTER", 0.5]
+
+
+console.log("\n\n")
+console.warn(
+  checkCashRegister(19.50, 20.00, [["PENNY", 0.01], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 0], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]])
+); // "Isufficient Funds"
+console.log("\n\n")
+
+console.warn(
+  checkCashRegister(19.50, 20.00, [["PENNY", 0.50], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 0], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]])
+); // "Closed"
+console.log("\n\n")
+
+console.warn(
+  checkCashRegister(3.26, 100.00, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.10], ["QUARTER", 4.25], ["ONE", 90.00], ["FIVE", 55.00], ["TEN", 20.00], ["TWENTY", 60.00], ["ONE HUNDRED", 100.00]])
+);
+//should return [["TWENTY", 60.00], ["TEN", 20.00], ["FIVE", 15.00], ["ONE", 1.00], ["QUARTER", 0.50], ["DIME", 0.20], ["PENNY", 0.04]]
+console.log("\n\n")
+
+console.warn(
+  checkCashRegister(19.50, 20.00, [["PENNY", 0.01], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 1.00], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]])
+); // "Isufficient Funds"
+console.log("\n\n")
+
+</script>
+
+</body>
+</html>

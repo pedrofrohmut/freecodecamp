@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="css/bootstrap.css">
+<link rel="stylesheet" href="css/main.css">
+<title>FCC | Pomodoro Clock</title>
+</head>
+<body>
+<main class="container">
+  <div id="pomodoroClock">
+    <h4 class="text-center">freeCodeCamp</h4>
+    <h3 class="text-center">Pomodoro Clock</h3>
+    <div id="counter" class="text-center mb-3"></div>
+    <button id="start" class="btn btn-success btn-sm">Start</button>
+    <button id="stop" class="btn btn-danger btn-sm float-right">Stop</button>
+    <button id="reset" class="btn btn-secondary btn-sm">Set</button>
+  </div>
+  <div class="centerWrappers">
+    <div class="wrapper" id="pomodoroLengthWrapper">
+      Pomodoro Length
+      <ul class="list-inline">
+        <li class="list-inline-item">
+          <div class="plusSign">
+            <button id="plusPomo">+</button>
+          </div>
+        </li>
+        <li class="list-inline-item">
+          <div class="lengthDisplay" id="pomodoroLength">25</div>
+        </li>
+        <li class="list-inline-item">
+          <div class="menusSign">
+            <button id="menusPomo">-</button>
+          </div>
+        </li>
+      </ul>
+    </div><!--/#pomodoroLength-->
+    <div class="wrapper" id="shortBreakWrapper">
+      Short Break Length
+      <ul class="list-inline">
+        <li class="list-inline-item">
+          <div class="plusSign">
+            <button id="plusSB">+</button>
+          </div>
+        </li>
+        <li class="list-inline-item">
+          <div class="lengthDisplay" id="shortBreakLength">5</div>
+        </li>
+        <li class="list-inline-item">
+          <div class="menusSign">
+            <button id="menusSB">-</button>
+          </div>
+        </li>
+      </ul>
+    </div><!--/#shortBreakLength-->
+    <div class="wrapper" id="longBreakWrapper">
+      Long Break Length
+      <ul class="list-inline">
+        <li class="list-inline-item">
+          <div class="plusSign">
+            <button id="plusLB">+</button>
+          </div>
+        </li>
+        <li class="list-inline-item">
+          <div class="lengthDisplay" id="longBreakLength">10</div>
+        </li>
+        <li class="list-inline-item">
+          <div class="menusSign">
+            <button id="menusLB">-</button>
+          </div>
+        </li>
+      </ul>
+    </div><!--/#longBreakLength-->
+  </div><!--/.centerWrappers-->
+  <ul class="list-inline radio-list">
+    <li class="list-inline-item">
+      <input id="pomoRadio" type="radio" name="counterFor" value="pomodoro" checked>
+      <label for="pomoRadio">Pomodoro</label>
+    </li>
+    <li class="list-inline-item">
+      <input id="sbRadio" type="radio" name="counterFor" value="shortBreak">
+      <label for="sbRadio">ShortBreak</label>
+    </li>
+    <li class="list-inline-item">
+      <input id="lbRadio" type="radio" name="counterFor" value="longBreak">
+      <label for="lbRadio">Long Break</label>
+    </li>
+  </ul>
+  <p class="default-time">
+    <strong>Default time length:</strong> <br>
+    Pomodoro = 25 minutes; <br>
+    Short Break = 5 minutes; <br>
+    Long Break = 10 minutes.
+  </p>
+</main>
+<br><br>
+<script src="js/pomodoro.js" charset="utf-8"></script>
+</body>
+</html>

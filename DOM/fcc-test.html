@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>FCC - DOM Tests</title>
+</head>
+<body>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(event) {
+      console.log("DOM fully loaded and parsed.");
+});
+
+document.readyState === "complete"; // true
+
+// alternative to DOMContentLoaded
+document.onreadystatechange = function () {
+    if (document.readyState === "interactive") {
+        initApplication();
+    }
+}
+
+// for (var i = 0; i < 1000000000; i++) {
+//   // this synchronous script is going to delay parsing of the DOM. So the DOMContentLoaded event is going to launch later.
+// }
+document.addEventListener("beforeunload", function() {
+  alert("You won't mothrFukr");
+});
+</script>
+
+</body>
+</html>

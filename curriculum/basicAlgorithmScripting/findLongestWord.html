@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>FCC - Find Longest Word</title>
+</head>
+<body>
+<script>
+const findLongestWord = (str) => {
+  let splited = str.split(' ')
+  let max = splited[0].length
+  splited.forEach((word, index) => {
+    if (index > 0) {
+      if (word.length > max) max = word.length
+    }
+  })
+  return max
+}
+console.warn(findLongestWord("The quick brown fox jumped over the lazy dog"))
+console.warn(findLongestWord("May the force be with you"))
+console.warn(findLongestWord("Google do a barrel roll"))
+console.warn(findLongestWord("What is the average airspeed velocity of an unladen swallow"))
+console.warn(findLongestWord("What if we try a super-long word such as otorhinolaryngology"))
+</script>
+</body>
+</html>

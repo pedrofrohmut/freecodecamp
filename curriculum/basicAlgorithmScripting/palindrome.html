@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>FCC - Palindrome</title>
+</head>
+<body>
+<script>
+const palindrome = (test) => {
+  test = test.replace(/(\W|_|\s)/gi, '')
+  return test.toLowerCase() === test.split('').reverse().join('').toLowerCase()
+}
+console.warn(palindrome("eye"))
+console.warn(palindrome("_eye"))
+console.warn(palindrome("rece car"))
+console.warn(palindrome("not a palindrome"))
+console.warn(palindrome("A man, a plan, a canal. Panama"))
+console.warn(palindrome("never odd or even"))
+console.warn(palindrome("nope"))
+console.warn(palindrome("almostomla"))
+console.warn(palindrome("My age is 0, 0 si ega ym."))
+console.warn(palindrome("1 eye for of 1 eye."))
+console.warn(palindrome("0_0 (: /-\ :) 0-0"))
+console.warn(palindrome("five|\_/|four"))
+</script>
+</body>
+</html>

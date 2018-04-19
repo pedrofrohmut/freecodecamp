@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Twitch TV JSON API</title>
+</head>
+<body>
+
+<div id="demo"></div>
+
+
+<!-- Google JQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+  console.log("I'm ready to go")
+
+  var streams = ["ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "habathcx", "RobotCaleb", "noobs2ninjas"]
+
+  loadStreams(streams)
+
+  //var streamName = streams[0]
+
+  //var url = "https://wind-bow.gomix.me/twitch-api/streams/"+streamName+"?callback=?"
+
+  /*$.getJSON(url, function(json) {
+    //console.log(JSON.stringify(json))
+  })*/
+})
+
+function loadStreams(streamsArr) {
+  //var url = "https://wind-bow.gomix.me/twitch-api/streams/"+streamName+"?callback=?"
+  var urls = streamsArr.map(function(streamName) {
+    return "https://wind-bow.gomix.me/twitch-api/streams/"+streamName+"?callback=?"
+  })
+
+  //console.log(urls)
+
+  urls.map(function(url) {
+    $.getJSON(url, function(json) {
+      //console.log("\n\n URL: " + url)
+      //console.log(JSON.stringify(json)+"\n\n")
+      $("#demo").append(JSON.stringify(json) + "<BR><BR><BR>")
+    })
+  })
+}
+
+</script>
+</body>
+</html>

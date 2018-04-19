@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>FCC - Inventory update</title>
+</head>
+<body>
+
+<script type="text/javascript">
+
+// function updateInventory(arr1, arr2) {
+//     // All inventory must be accounted for or you're fired!
+//     return arr1;
+// }
+function updateInventory(arr1, arr2) {
+  var currInv = arr1;
+  var newInv = arr2;
+  var resultArr = [...currInv];
+
+  for (var i = 0; i < newInv.length; i++) {
+    var itemQuantity = newInv[i][0];
+    var itemName     = newInv[i][1];
+    var found        = undefined;
+
+    found = currInv.find(function(item) {
+      return item[1] === itemName;
+    }); // console.log("itemName: " + itemName + ", found: " + found);
+
+    if (found === undefined) {
+      var newItem = [];
+      newItem[0] = itemQuantity;
+      newItem[1] = itemName;
+      resultArr.push(newItem);
+    } else {
+      found[0] = itemQuantity + found[0];
+    }
+  } //end_for
+
+  resultArr = resultArr.sort(function(a, b) {
+    return a[1] > b[1];
+  }); //console.log(resultArr);
+  return resultArr;
+} //end_func
+
+// Example inventory lists
+var curInv = [
+    [21, "Bowling Ball"],
+    [2, "Dirty Sock"],
+    [1, "Hair Pin"],
+    [5, "Microphone"]
+];
+
+var newInv = [
+    [2, "Hair Pin"],
+    [3, "Half-Eaten Apple"],
+    [67, "Bowling Ball"],
+    [7, "Toothpaste"]
+];
+
+updateInventory(curInv, newInv);
+
+// var b = "Hair Pin"
+// var a = curInv.find(function(item) {
+//   return item[1] === b;
+// })
+// console.log(a)
+
+// var arrA = curInv
+// var arrB = Array.from(arrA)
+// arrB.push([5, "TESTE"])
+// console.log(arrA)
+// console.log(arrB.toLocaleString())
+// console.log(arrA)
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>FCC - Promises</title>
+</head>
+<body>
+
+<script type="text/javascript">
+// JS Nuggets: Promises
+
+// Basic Usage
+var p = new Promise(function(resolve, reject) {
+  // Do an async task and then ....
+  if (good_condition) {
+    resolve('Success!')
+  } else {
+    reject('Failure!')
+  }
+})
+
+// is what u gonna do after the promise is complete
+p.then(function() {
+  // do something with the result
+}).catch(function() {
+  // error
+})
+
+var promiseCount = 0;
+
+function testPromise() {
+  var thisPromiseCount = ++promiseCount;
+  console.log(thisPromiseCount + ': Started - Sync code started')
+
+  var promise = new Promise(function(resolve, reject) {
+    console.log(thisPromiseCount + ": Promise started - Async code started")
+    // This is only one example to create asyncronism
+    window.setTimeout(
+      function() {
+        resolve(thisPromiseCount)
+      },
+      Math.random() * 2000 + 1000
+    )
+  })
+
+  promise.then(function(val) {
+    console.log(val + ": Promise fulfilled - Async code terminated.")
+  }).catch(function(reason) {
+    console.log('Handle rejected promise ('+reason+') here.')
+  })
+
+  console.log(thisPromiseCount + ": Promise made - Sync code terminated.")
+}
+
+testPromise()
+testPromise()
+testPromise()
+</script>
+</body>
+</html>
