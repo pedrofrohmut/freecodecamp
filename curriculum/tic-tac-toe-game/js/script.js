@@ -28,20 +28,46 @@ const turns = Object.freeze(["playerTurn", "pcTurn"]);
 let currTurn = turns[0];
 let pcSymbol = x;
 let playerSymbol = o;
+let gameEnded = false;
 
-//### FUNCTIONS
+//### FUNCTIONS=
+const hideEndGamePanel = () => {
+    endGamePanel.classList.remove("win-game");
+    endGamePanel.classList.remove("game-over");
+    endGamePanel.classList.add("hidden");
+}
+const displayWinGamePanel = (playedSymbol) => {
+    // endGamePanel.style.display = "block";
+    // endGamePanel.classList.add = "win-game";
+    endGamePanel.classList.remove("hidden");
+    endGamePanel.classList.add("win-game");
+    endGamePanel.innerText = playedSymbol + " is the winner";
+}
+const displayGameOverPanel = () => {
+    // endGamePanel.style.display = "block";
+    // endGamePanel.style.backgroundColor = "#f00";
+    // endGamePanel.classList.add = "game-over";
+    endGamePanel.classList.remove("hidden");
+    endGamePanel.classList.add("game-over");
+    endGamePanel.innerText = "Game Over";
+}
+
+//### STATE FUNCTIONS
 const startTheGame = () => {
     Array.from(cells).forEach(cell => cell.innerText = "");
-    endGamePanel.style.display = "none";
+    // endGamePanel.style.display = "none";
+    gameEnded = false;
+    hideEndGamePanel();
     return;
 }
-//### STATE FUNCTIONS
+// get the new turn from turns based on the passed turn
 const getChangedTurn = (thisTurn) => {
     if (thisTurn === turns[0])
         return turns[1];
     else    
         return turns[0];
 }
+// fill the cell passed with the symbol passed if its is empty
 const fillCell = (cell, currSymbol) => {
     if (cell.innerText === "") {
         cell.innerText = currSymbol;
@@ -50,20 +76,36 @@ const fillCell = (cell, currSymbol) => {
         return false;
     }
 }
+// checks the inner text of cells of cells array (table content) and checks if it match one of the conditions stored on the winConditions array (constant the inform what are the conditions to win)
 const isThereAWinner = (playedSymbol) => {
     // interates trougth global array of win conditions
-    for (let winCondition of winConditions) {
+    for (let thisWinCondition of winConditions) {
         // checks if the passed param maches one of the conditions
         if (
-            playedSymbol === cells[winCondition[0]].innerText &&
-            playedSymbol === cells[winCondition[1]].innerText &&
-            playedSymbol === cells[winCondition[2]].innerText 
+            playedSymbol === cells[thisWinCondition[0]].innerText &&
+            playedSymbol === cells[thisWinCondition[1]].innerText &&
+            playedSymbol === cells[thisWinCondition[2]].innerText 
         ) {
             // Display and change the text to match the played symbol
-            endGamePanel.style.display = "block";
-            endGamePanel.innerText = playedSymbol + " is the winner";
+            displayWinGamePanel(playedSymbol);
+            // updates the state
+            gameEnded = true;
+            return true;
         }
     }
+    return false;
+}
+// Checks if all table cells are filled
+const isTheGameOver = () => {
+    for (let cell of cells) {
+        if (cell.innerText === "") {
+            return false;
+        }
+    }
+    displayGameOverPanel();
+    // updates the state
+    gameEnded = true;
+    return true;
 }
 
 //### START THE GAME 
@@ -72,15 +114,21 @@ startTheGame();
 //### LISTENERS
 // Cells click event
 cells.forEach(cell => cell.addEventListener("click", (e) => {
-    // Get the symbol based on currTurn
-    const currSymbol = 
-        (currTurn === turns[0]) ? playerSymbol : pcSymbol;
-    // Try to fill a cell
-    const filled = fillCell(e.target, currSymbol);
-    // Changed turn and check only when cell filled
-    if (filled) {
-        currTurn = getChangedTurn(currTurn);
-        isThereAWinner(currSymbol); 
+    if (gameEnded === false) {
+        // Get the symbol based on currTurn
+        const currSymbol = 
+            (currTurn === turns[0]) ? playerSymbol : pcSymbol;
+        // Try to fill a cell
+        const filled = fillCell(e.target, currSymbol);
+        // Changed turn and check only when cell filled
+        if (filled) {
+            // update current turn state
+            currTurn = getChangedTurn(currTurn);
+            if (!isThereAWinner(currSymbol)) {
+                // checks if the game is over when there's no winners
+                isTheGameOver();
+            }
+        }
     }
 }));
 // reset btn click event

@@ -35,18 +35,33 @@
 }
 
 /* END_GAME_PANEL */
-div.endGamePanel {
+.end-game-panel {
   position: absolute;
   display: none;
   width: 450px;
-  top: 110px;
+  /* top: 110px; */
   padding: 25px 0;
   left: 50%;
   margin-left: -228px;
-  background-color: #0f0;
-  opacity: 0.95;
+  /* background-color: #0f0; */
+  opacity: 0.9;
 
   text-align: center;
   font-size: 5rem;
   color: #fff;
+}
+
+/* STATE CSS */
+.hidden {
+  display: none !important;
+}
+.win-game {
+  display: block !important;
+  top: 110px;
+  background-color: #0F0;
+}
+.game-over {
+  display: block !important;
+  top: 155px;
+  background-color: #F00;
 }
