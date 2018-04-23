@@ -51,7 +51,19 @@ const fillCell = (cell, currSymbol) => {
     }
 }
 const isThereAWinner = (playedSymbol) => {
-    
+    // interates trougth global array of win conditions
+    for (let winCondition of winConditions) {
+        // checks if the passed param maches one of the conditions
+        if (
+            playedSymbol === cells[winCondition[0]].innerText &&
+            playedSymbol === cells[winCondition[1]].innerText &&
+            playedSymbol === cells[winCondition[2]].innerText 
+        ) {
+            // Display and change the text to match the played symbol
+            endGamePanel.style.display = "block";
+            endGamePanel.innerText = playedSymbol + " is the winner";
+        }
+    }
 }
 
 //### START THE GAME 
@@ -65,11 +77,11 @@ cells.forEach(cell => cell.addEventListener("click", (e) => {
         (currTurn === turns[0]) ? playerSymbol : pcSymbol;
     // Try to fill a cell
     const filled = fillCell(e.target, currSymbol);
-    // Changed turn only on cell filled
+    // Changed turn and check only when cell filled
     if (filled) {
         currTurn = getChangedTurn(currTurn);
+        isThereAWinner(currSymbol); 
     }
-    isThereAWinner(currSymbol); 
 }));
 // reset btn click event
 resetBtn.addEventListener("click", (e) => startTheGame());
