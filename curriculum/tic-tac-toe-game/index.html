@@ -11,7 +11,11 @@
 <title>Tic Tac Toe Game</title>
 </head>
 <body>
+<!-- Show Curr Turn -->
+<div id="showCurrTurn" class="show-curr-turn"></div>  
+<!-- Game Wrapper -->
 <div class="game-wrapper">
+  <!-- Game Table -->
   <table class="game-table" id="gameTable">
     <tr>
       <td class="cell" id="cell0"></td>
@@ -29,10 +33,17 @@
       <td class="cell" id="cell8"></td>
     </tr>
   </table>
-</div>
-<button type="button" id="resetBtn" class="reset-btn">Reset</button>
+</div><!--/.game-wrapper-->
+<button type="button" id="resetBtn" class="reset-btn">Reset & Choose</button>
 <!-- End Game Panel -->
-<div class="end-game-panel" id="endGamePanel">You Win!</div>
+<div class="end-game-panel" id="endGamePanel"></div>
+<!-- Choose Symbol Panel -->
+<div class="choose-symbol-panel" id="chooseSymbolPanel">
+  <!-- <p>Which will be your Symbol?</p> -->
+  <p>Choose your Weapons</p>
+  <button>X</button>
+  <button>O</button>
+</div>
 <!-- JavaScript Sources -->
 <script src="js/script.js" charset="utf-8"></script>
 </body>

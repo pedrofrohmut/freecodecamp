@@ -1,14 +1,16 @@
 //### ELEMENTS
+const showCurrTurnPanel = document.getElementById("showCurrTurn");
 const resetBtn = document.getElementById("resetBtn");
 const table = document.getElementById("gameTable");
 const endGamePanel = document.getElementById("endGamePanel");
+const chooseSymbolPanel = document.getElementById("chooseSymbolPanel");
 
 const cells = 
     Object.freeze(Array.from(table.getElementsByClassName("cell")));
 
 //### CONSTANTS
-const x = 'X';
-const o = 'O';
+const x = "X";
+const o = "O";
 const winConditions = Object.freeze([
     // Horizontal wins
     Object.freeze([0, 1, 2]),
@@ -26,37 +28,59 @@ const turns = Object.freeze(["playerTurn", "pcTurn"]);
 
 //### STATE
 let currTurn = turns[0];
-let pcSymbol = x;
-let playerSymbol = o;
+let playerSymbol = x;
+let pcSymbol = o;
 let gameEnded = false;
 
-//### FUNCTIONS=
+//### FUNCTIONS
+const displayChooseSymbolPanel = () => {
+    chooseSymbolPanel.classList.remove("hidden");
+}
+const hideChooseSymbolPanel = () => {
+    chooseSymbolPanel.classList.add("hidden");
+}
+const hideShowCurrTurnPanel = () => {
+    showCurrTurnPanel.classList.add("hidden");
+}
+const displayShowCurrTurnPanel = () => {
+    showCurrTurn(currTurn);
+    showCurrTurnPanel.classList.remove("hidden");
+}
 const hideEndGamePanel = () => {
     endGamePanel.classList.remove("win-game");
     endGamePanel.classList.remove("game-over");
     endGamePanel.classList.add("hidden");
 }
 const displayWinGamePanel = (playedSymbol) => {
-    // endGamePanel.style.display = "block";
-    // endGamePanel.classList.add = "win-game";
     endGamePanel.classList.remove("hidden");
     endGamePanel.classList.add("win-game");
     endGamePanel.innerText = playedSymbol + " is the winner";
 }
 const displayGameOverPanel = () => {
-    // endGamePanel.style.display = "block";
-    // endGamePanel.style.backgroundColor = "#f00";
-    // endGamePanel.classList.add = "game-over";
     endGamePanel.classList.remove("hidden");
     endGamePanel.classList.add("game-over");
     endGamePanel.innerText = "Game Over";
 }
 
 //### STATE FUNCTIONS
+// setup
+const setup = () => {
+    // displayShowCurrTurnPanel(); //temp##
+    hideEndGamePanel();
+    hideShowCurrTurnPanel();
+    displayChooseSymbolPanel();
+}
+// starts and restarts the game
 const startTheGame = () => {
+    // set-reset the turn
+    currTurn = turns[0];
+    // clears the game table
     Array.from(cells).forEach(cell => cell.innerText = "");
-    // endGamePanel.style.display = "none";
+    // let the game available to play again (update global state)
     gameEnded = false;
+    // updates the panel that shows whos turn it is
+    showCurrTurn(currTurn);
+    // hide the end game panel
     hideEndGamePanel();
     return;
 }
@@ -107,9 +131,26 @@ const isTheGameOver = () => {
     gameEnded = true;
     return true;
 }
+const showCurrTurn = (thisTurn) => {
+    showCurrTurnPanel.classList.remove("hidden");
+    showCurrTurnPanel.classList.remove("curr-turn-0");
+    showCurrTurnPanel.classList.remove("curr-turn-1");
+    if (thisTurn === turns[0]) {
+        showCurrTurnPanel.classList.add("curr-turn-0");
+        showCurrTurnPanel.innerHTML = `
+        <strong>${playerSymbol}</strong> turn`;
+    } else {
+        showCurrTurnPanel.classList.add("curr-turn-1");
+        // showCurrTurnPanel.innerText = pcSymbol + "turn";
+        showCurrTurnPanel.innerHTML = `
+        <strong>${pcSymbol}</strong> turn`;
+    }
+    return;
+}
 
 //### START THE GAME 
-startTheGame();
+setup();
+// startTheGame();
 
 //### LISTENERS
 // Cells click event
@@ -124,6 +165,7 @@ cells.forEach(cell => cell.addEventListener("click", (e) => {
         if (filled) {
             // update current turn state
             currTurn = getChangedTurn(currTurn);
+            showCurrTurn(currTurn);
             if (!isThereAWinner(currSymbol)) {
                 // checks if the game is over when there's no winners
                 isTheGameOver();
@@ -132,6 +174,22 @@ cells.forEach(cell => cell.addEventListener("click", (e) => {
     }
 }));
 // reset btn click event
-resetBtn.addEventListener("click", (e) => startTheGame());
+resetBtn.addEventListener("click", (e) => setup());
 // end game panel click event
 endGamePanel.addEventListener("click", (e) => startTheGame());
+// choose button clicked
+chooseSymbolPanel.addEventListener("click", (e) => {
+    // Capture Event Bubbling
+    if (e.target.innerText === x || e.target.innerText === o) {
+        // Set the player's Symbol
+        if (e.target.innerText === x) {
+            playerSymbol = x;
+            pcSymbol = o;
+        } else {
+            playerSymbol = o;
+            pcSymbol = x;
+        }
+        hideChooseSymbolPanel();
+        startTheGame();
+    }
+});

@@ -1,10 +1,31 @@
 /* FONTS */
 /* font-family: 'Indie Flower', cursive; */
+body {
+  user-select: none;
+}
 
+/* SHOW_CURRENT_TURN */
+.show-curr-turn {
+  /* display: none; */
+  background-color: #60f;
+  width: 200px;
+  margin: 0 auto;
+  color: #fff;
+  font-size: 3rem;
+  text-align: center;
+  padding: 7px 0;
+  opacity: 0.5;
+  font-family: 'Indie Flower', cursive;
+}
+
+/* GAME_TABLE_FORMAT */
 .game-table {
-  margin: 40px auto 0;
-  background: radial-gradient( rgba(128, 128, 128, 1), rgba(0, 0, 0, 1) 75%);
-  border-collapse: collapse;
+    position: absolute;
+    background: radial-gradient( rgba(128, 128, 128, 1), rgba(0, 0, 0, 1) 75%);
+    border-collapse: collapse;
+    left: 50%;
+    margin-left: -185px;
+    top: 100px;
 }
 .game-table td {
   display: table-cell;
@@ -20,48 +41,90 @@
 
   user-select: none; /* blocks-text-selection */
 }
+
+/* RESET_BUTTON */
 .reset-btn {
   background: #3366cc;
   color: #fff;
+  font-size: 1.2rem;
   border: 0;
   border-radius: 0.5rem;
-
-  position: relative;
-  padding: 7px 0;
-  width: 100px;
+  padding: 9px 0;
   left: 50%;
-  margin-left: -50px;
-  margin-top: 20px;
+  width: 180px;
+  margin-left: -90px;
+
+  position: absolute;
+  top: 485px;
 }
 
 /* END_GAME_PANEL */
 .end-game-panel {
   position: absolute;
-  display: none;
-  width: 450px;
-  /* top: 110px; */
-  padding: 25px 0;
   left: 50%;
-  margin-left: -228px;
-  /* background-color: #0f0; */
-  opacity: 0.9;
+  margin-left: -225px;
 
+  width: 450px;
+  opacity: 0.9;
   text-align: center;
   font-size: 5rem;
   color: #fff;
 }
 
+/* CHOOSE_SYMBOL_PANEL */
+.choose-symbol-panel {
+  width: 374px;
+  height: 374px;
+  background-color: #ccc;
+  color: #333;
+  left: 50%;
+  margin-left: -187px;
+  opacity: 0.96;
+
+  position: absolute;
+  top: 98px;
+}
+.choose-symbol-panel p {
+  font-size: 3rem;
+  padding: 10px;
+  text-align: center;
+}
+.choose-symbol-panel button {
+  position: absolute;
+  top: 200px;
+  left: 24%;
+  border: 1px solid #333;
+  background-color: #ccc;
+  color: #333;
+  /* padding: 27px 30px; */
+  height: 70px;
+  width: 70px;
+  font-size: 3rem;
+}
+.choose-symbol-panel button:last-child {
+  left:57%;
+}
+
 /* STATE CSS */
+/* SHOW_CURRENT_TURN_STATE */
+.curr-turn-0 {
+  background-color: #60f;
+}
+.curr-turn-1 {
+  background-color: #f06;
+}
+
+/* END_GAME_PANEL_STATE */
 .hidden {
   display: none !important;
 }
 .win-game {
   display: block !important;
-  top: 110px;
+  top: 194px;
   background-color: #0F0;
 }
 .game-over {
   display: block !important;
-  top: 155px;
+  top: 239px;
   background-color: #F00;
 }
