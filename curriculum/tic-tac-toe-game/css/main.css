@@ -33,3 +33,19 @@
   margin-left: -50px;
   margin-top: 20px;
 }
+
+/* END_GAME_PANEL */
+div.endGamePanel {
+  position: absolute;
+  display: none;
+  width: 380px;
+  top: 154px;
+  padding: 25px 0;
+  left: 50%;
+  margin-left: -190px;
+  background-color: #0f0;
+
+  text-align: center;
+  font-size: 5rem;
+  color: #fff;
+}
