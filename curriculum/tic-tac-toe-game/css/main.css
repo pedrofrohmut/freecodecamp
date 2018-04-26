@@ -115,7 +115,7 @@ body {
 }
 
 /* END_GAME_PANEL_STATE */
-.hidden {
+.display-none {
   display: none !important;
 }
 .win-game {
