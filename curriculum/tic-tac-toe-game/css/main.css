@@ -128,3 +128,8 @@ body {
   top: 239px;
   background-color: #F00;
 }
+.lose-game {
+  display: block !important;
+  background-color: #F60;
+  top: 239px;
+}

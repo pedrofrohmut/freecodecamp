@@ -182,7 +182,7 @@ const pcMakePlay = function (thisSymbol) {
     const isGameOver = isTheGameOver();
     if (isGameOver) return;
 }
-const bestEmptySpot = function 
+const bestEmptySpot = function () {}
 const setupThePlayerAndPcSymbols = function (e) {
     // Capture Event Bubbling
     if (e.target.innerText === x || e.target.innerText === o) {
